@@ -1,9 +1,9 @@
-for i in ["",]:
-    input("Incoming message: ")
-    print("Result", i)
-    print("\n\n")
+# for i in ["",]:
+#     input("Incoming message: ")
+#     print("Result", i)
+#     print("\n\n")
 
-
+print("Welcome to the Information Neutralizer, a tool designed to help you discern fact from fiction in the information you encounter. Our software analyzes messages and rephrases them to present a more objective and balanced view, free from emotional bias and misleading claims. Whether you're navigating news articles, social media posts, or any other form of communication, the Information Neutralizer empowers you to make informed decisions based on clear, unbiased information.")
 
 print("""
 Provide message: The new policy is a disaster and will ruin the economy. 
@@ -27,5 +27,10 @@ Result: "The new study's claims of health benefits are being scrutinized for the
 
 
 """)
+
+
+"""
+Baby formula 
+"""
 
 input("Provide message:")
