@@ -29,8 +29,18 @@ Result: "The new study's claims of health benefits are being scrutinized for the
 """)
 
 
-"""
-Baby formula 
-"""
 
+"""
+# enum: 
+
+# emtional
+
+"""
 input("Provide message:")
+
+# Dozens of biases. Human have about 50 of them. Propagandist use those to play on the psychology. Consequently false emotional content is spreaded much quickly because humans are trapped.
+
+# <celebrity name> ate my hamster
+
+
+
