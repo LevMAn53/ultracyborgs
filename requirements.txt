@@ -1,3 +1,4 @@
+pandas
 vaderSentiment
 python-dotenv
 langchain_anthropic
