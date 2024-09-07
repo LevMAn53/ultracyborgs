@@ -1,18 +1,12 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-
-# Types
-class Request(BaseModel):
-    content: str
-
-class RedFlag:
-    RedFlagId: int
-    Phrase: str
+from service_runner import run_services
+from type_annotations import RedFlag, Request
 
 # App
 app = FastAPI()
 
 @app.post("/red_flags")
 async def root(request: Request) -> list[RedFlag]:
-    tweet: str = Request.content
-    raise NotImplementedError()
+    tweet: str = request.content
+
+    return run_services(tweet)
