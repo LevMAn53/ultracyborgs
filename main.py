@@ -12,7 +12,7 @@ class RedFlag:
 # App
 app = FastAPI()
 
-@app.post("/check_tweet")
+@app.post("/red_flags")
 async def root(request: Request) -> list[RedFlag]:
     tweet: str = Request.content
     raise NotImplementedError()
