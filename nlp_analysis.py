@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.tokenize import word_tokenize
@@ -53,6 +55,18 @@ def extract_features(headline):
     return feature_set
 
 # Example usage
-headline = "Breaking: New study reveals shocking truth about vaccines"
-features = extract_features(headline)
-print(features)
+# headline = "Breaking: New study reveals shocking truth about vaccines"
+# features = extract_features(headline)
+# pprint(features)
+
+
+def neutralize_message(i, headline):
+    neutralized = ["The new policy has been met with concerns regarding its potential impact on the economy.",
+"The government's response to the crisis has been criticized by some for its effectiveness.",
+"Concerns have been raised about the product's promises and the company's transparency with its customers.",
+"The artist's new album has been well-received by many and is considered a significant work by some critics.",
+"The new study's claims of health benefits are being scrutinized for their scientific validity and potential marketing motivations.",]
+    try:
+        return neutralized[i]
+    except IndexError:
+        return headline

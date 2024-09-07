@@ -1,9 +1,25 @@
-# for i in ["",]:
-#     input("Incoming message: ")
-#     print("Result", i)
-#     print("\n\n")
+import classification
+import data_ingestion
+import nlp_analysis
 
+print("="*100)
 print("Welcome to the Information Neutralizer, a tool designed to help you discern fact from fiction in the information you encounter. Our software analyzes messages and rephrases them to present a more objective and balanced view, free from emotional bias and misleading claims. Whether you're navigating news articles, social media posts, or any other form of communication, the Information Neutralizer empowers you to make informed decisions based on clear, unbiased information.")
+i = 0
+for headline in data_ingestion.ingress:
+    size = len(headline)
+    blured = "*" * size
+    print(f'Incoming message: "{blured}"')
+
+    
+    classification.check_whataboutism(headline)
+    headline = classification.analyze_emotional_language(headline)
+    print("Neutralized message: ", nlp_analysis.neutralize_message(i, headline))
+    response = input("Do you want to see the original? (yes/no): ")
+    if response.lower() == "yes":
+        print(f'Original message: "{headline}"')
+
+    i += 1
+    print("\n\n")
 
 print("""
 Provide message: The new policy is a disaster and will ruin the economy. 
