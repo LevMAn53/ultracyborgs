@@ -14,18 +14,23 @@ def analyze_emotional_language(text):
         "disgusting": "disagreable",
         "heartbreaking": "unfortunate coincidence",
         "disaster": "unfortunate event",
-
+        "failure": "unsuccessful",
+        "deceiving": "misleading",
     }
 
-    emotionally_charged_words = ["angry", "outraged", "horrified", "heartbreaking", "devastating"]
-    for word in emotionally_charged_words:
+    # emotionally_charged_words = ["angry", "outraged", "horrified", "heartbreaking", "devastating"]
+    bad = False
+    for word in emotional_to_neutral:
         if word in text.lower():
-            print("AI: Reading this could evoke strong emotions.")
-            for word in emotionally_charged_words:
-                text.replace(word, emotional_to_neutral[word])
-            print(f"AI: Here is a neutral version of the text: {text}")
+            bad = True
+            text.replace(word, emotional_to_neutral[word])
             # raise ValueError("Emotionally charged language detected.")
-            return text
+    if bad:
+        print("AI: Reading original message could evoke strong emotions.")
+    
+    # print(f"AI: Here is a neutral version of the text: {text}")
+
+    return text
     # else:
         # print("AI: No emotionally charged language detected.")
 

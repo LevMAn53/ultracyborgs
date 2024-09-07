@@ -1,49 +1,35 @@
 import classification
 import data_ingestion
 import nlp_analysis
+from reporting_interface import present
 
 print("="*100)
-print("Welcome to the Information Neutralizer, a tool designed to help you discern fact from fiction in the information you encounter. Our software analyzes messages and rephrases them to present a more objective and balanced view, free from emotional bias and misleading claims. Whether you're navigating news articles, social media posts, or any other form of communication, the Information Neutralizer empowers you to make informed decisions based on clear, unbiased information.")
-i = 0
-for headline in data_ingestion.ingress:
+present("\nWelcome to the Information Neutralizer, a tool designed to help you discern fact from fiction in the information you encounter. Our software analyzes messages and rephrases them to present a more objective and balanced view, free from emotional bias and misleading claims. Whether you're navigating news articles, social media posts, or any other form of communication, the Information Neutralizer empowers you to make informed decisions based on clear, unbiased information.\n\n\n")
+
+
+def run_protection_use_case(i, headline):
     size = len(headline)
     blured = "*" * size
-    print(f'Incoming message: "{blured}"')
-
-    
+    present(f'Incoming message: "{blured}"')
     classification.check_whataboutism(headline)
     headline = classification.analyze_emotional_language(headline)
-    print("Neutralized message: ", nlp_analysis.neutralize_message(i, headline))
+    present("Neutralized message: ", nlp_analysis.neutralize_message(i, headline))
     response = input("Do you want to see the original? (yes/no): ")
-    if response.lower() == "yes":
+    if response.lower() == "yes" or response.lower() == "y":
         print(f'Original message: "{headline}"')
+    present("\n\n")
 
+
+
+i = 0
+for headline in data_ingestion.ingress:
+    run_protection_use_case(i, headline)
     i += 1
-    print("\n\n")
-
-print("""
-Provide message: The new policy is a disaster and will ruin the economy. 
-Result: "The new policy has been met with concerns regarding its potential impact on the economy."
 
 
-Provide message: The government's response to the crisis is a complete failure and shows their incompetence. 
-Result: "The government's response to the crisis has been criticized by some for its effectiveness."
-
-
-Provide message: This product is a scam and the company is deceiving its customers. 
-Result: "Concerns have been raised about the product's promises and the company's transparency with its customers."
-
-
-Provide message: The artist's new album is a masterpiece and the best work of the century. 
-Result: "The artist's new album has been well-received by many and is considered a significant work by some critics."
-
-
-Provide message: The new study claiming health benefits is bogus and just a marketing ploy. 
-Result: "The new study's claims of health benefits are being scrutinized for their scientific validity and potential marketing motivations."
-
-
-""")
-
+def ingress_generator():
+    run_protection_use_case(100, input("Provide message:")
+)
 
 
 """
@@ -52,7 +38,6 @@ Result: "The new study's claims of health benefits are being scrutinized for the
 # emtional
 
 """
-input("Provide message:")
 
 # Dozens of biases. Human have about 50 of them. Propagandist use those to play on the psychology. Consequently false emotional content is spreaded much quickly because humans are trapped.
 

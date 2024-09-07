@@ -1,6 +1,6 @@
 from time import sleep
 
 
-def present(text):
-    print(text)
-    sleep(0.5)
+def present(*args, **kwargs):
+    print(*args, **kwargs)
+    sleep(2)
