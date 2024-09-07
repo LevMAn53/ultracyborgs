@@ -4,6 +4,7 @@ import re
 def detect_manipulative_content(text):
     # Define the pattern for "What about...?"
     pattern = r'\bwhat about\b.*\?'
+    pattern = r'\bas for\b.*\?'
 
     # Search for the pattern in the text
     match = re.search(pattern, text, re.IGNORECASE)
