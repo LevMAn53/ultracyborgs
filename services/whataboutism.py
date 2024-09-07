@@ -3,16 +3,21 @@ import re
 # Function to detect the phrase "What about...?" and return a warning
 def detect_manipulative_content(text):
     # Define the pattern for "What about...?"
-    pattern = r'\bwhat about\b.*\?'
-
+    pattern1 = r'\bwhat about\b.*\?'
+    pattern2 = r'\bas for\b.*\ '
+    
     # Search for the pattern in the text
-    match = re.search(pattern, text, re.IGNORECASE)
+    match1 = re.search(pattern1, text, re.IGNORECASE)
+    match2 = re.search(pattern2, text, re.IGNORECASE)
+
+    match = match1 or match2
     
     if match:
-        # Simulate a pop-up by printing a message to the console
         print("Warning: This content may be manipulative! Detected the phrase 'What about...?'")
+        return 1
     else:
         print("No manipulative content detected.")
+        return 0 
 
 # Example input text
 content = input("Enter the content: ")
