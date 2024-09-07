@@ -2,53 +2,30 @@ import re
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import pandas as pd 
 
+ID: int = 3
+
 # Define a list of clickbait words/phrases
-clickbait_phrases = pd.read_csv("/Users/levmanulak/Desktop/nice-words.csv")['2g1c'].tolist()
+CLICKBAIT_PHRASES: list[str] = pd.read_csv("../nice-words.csv")['2g1c'].tolist()
 
 # Function to detect and flag clickbait words in a text
-def detect_clickbait(text, clickbait_phrases):
-    flagged_info = []
-    # Split the text into sentences
-    # sentences = re.split(r'(?<=[.!?]) +', text)
- #   sentences = sentences
-#    for sentence in sentences:
-        # Check if any clickbait phrase is present in the sentence
-    sentences=text
-    for phrase in clickbait_phrases:
-        if re.search(r'\b' + re.escape(phrase) + r'\b', sentences, re.IGNORECASE):
+def detect_trolling(text: str) -> list[str]:
+    flagged_info: list[str] = []
+
+    for phrase in CLICKBAIT_PHRASES:
+        if re.search(r'\b' + re.escape(phrase) + r'\b', text, re.IGNORECASE):
             # Append the flagged sentence and the triggering word/phrase
-            flagged_info.append( phrase)
-              # Only append once per sentence
+            flagged_info.append(phrase)
 
     return flagged_info
 
 # Function to analyze sentiment using VADER
-def analyze_sentiment(flagged_info):
+def trolling_service(text: str) -> list | None:
+    flagged_info: list[str] = detect_trolling(text)
+
     analyzer = SentimentIntensityAnalyzer()
-    sentiment_results = {}
-    
-    for phrase in flagged_info:
-        sentiment = analyzer.polarity_scores(sentence)
-        if sentiment['neg'] >0.4:
-            # Flag sentences with negative sentiment > 0.5
-            sentiment_results[phrase] = f"Flagged due to '{phrase}': trolling detected"
-    
-    return sentiment_results
+    sentiment = analyzer.polarity_scores(text)
 
+    if sentiment['neg'] > 0.5:
+        return [(ID, word, None) for word in flagged_info]
 
-
-# Example text (input a news article or any content)
-news_article = input("Enter the news article: ")
-
-# Detect and flag sentences containing clickbait words
-flagged_info = detect_clickbait(news_article, clickbait_phrases)
-
-if flagged_info:
-    print("Flagged Sentences containing trolling:")
-    sentiment_results = analyze_sentiment(flagged_info)
-    print(sentiment_results, "sent res")
-    for sentence, result in sentiment_results.items():
-        print(f"\n- {sentence}")
-        print(f"  {result}")
-else:
-    print("it's trolling-free!")
+    return None
