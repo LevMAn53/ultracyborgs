@@ -1,6 +1,8 @@
 import re
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
+ID: int = 2
+
 # Define a list of clickbait words/phrases
 CLICKBAIT_PHRASES: list[str] = [
     "Amazing", "Unbelievable", "Shocking", "Incredible", "Mind-blowing", "Jaw-dropping", 
@@ -37,7 +39,7 @@ def detect_clickbait(text: str) -> list[tuple[str, str]]:
     return flagged_info
 
 # Function to analyze sentiment using VADER
-def analyze_sentiment(flagged_info: list[tuple[str, str]]) -> list[str]:
+def analyze_sentiment(flagged_info: list[tuple[str, str]]) -> list:
     '''
     Marks sentance with 1 if the sentiment is positive, 0 if the sentiment is negative
     '''
@@ -49,9 +51,11 @@ def analyze_sentiment(flagged_info: list[tuple[str, str]]) -> list[str]:
         sentiment = analyzer.polarity_scores(sentence)
 
         if sentiment['neg'] > 0.5 or sentiment['pos'] > 0.5:
-            sentiment_results.append(phrase)
+            sentiment_results.append((ID, phrase, None))
     
     return list(set(sentiment_results))
 
-def emotional_clickbait_service(tweet: str) -> list[str]:
-    return analyze_sentiment(detect_clickbait(tweet))
+def emotional_clickbait_service(tweet: str) -> list | None:
+    words: list = analyze_sentiment(detect_clickbait(tweet))
+
+    return words if len(words) > 0 else None

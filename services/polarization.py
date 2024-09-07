@@ -3,6 +3,8 @@ from langchain_anthropic import Anthropic
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 
+ID: int = 4
+
 # Load environment variables
 dotenv.load_dotenv()
 
@@ -61,11 +63,16 @@ prompt = PromptTemplate(
 chain = prompt | llm | StrOutputParser()
 
 # Service
-def polarization_service(tweet: str) -> tuple[bool, str]:
+def polarization_service(tweet: str) -> list | None:
     invokation = chain.invoke({'tweet': tweet})
     _, polarization, explanation = invokation.split('\n')
 
-    return (
-        bool(polarization[14:]),
-        explanation[13:]
-    )
+
+    if polarization[14:] == 'True':
+        return [(
+            ID,
+            tweet,
+            explanation[13:]
+        )]
+
+    return None
