@@ -1,1 +1,2 @@
 from .polarization import polarization_service
+from .emotional_clickbait import emotional_clickbait_service
