@@ -1,7 +1,8 @@
 import re
 
+ID: int = 1
 
-wat_patterns = {
+WAT_PATTERNS: dict[str, str] = {
     "what about...?" : r'\bwhat about\b.*\?',
     "as for..." : r'\bas for\b.*\ ',
     "how about...?" : r'\bhow about\b.*\?',
@@ -13,50 +14,16 @@ wat_patterns = {
 
 }
 
-
-
 # Function to detect the phrase "What about...?" and return a warning
-def detect_manipulative_content(text):
-    # Define the pattern for "What about...?"
-    
-    # pattern1 = r'\bwhat about\b.*\?'
-    # pattern2 = r'\bas for\b.*\ '
-    
-    # Search for the pattern in the text
-    # match1 = re.search(pattern1, text, re.IGNORECASE)
-    # match2 = re.search(pattern2, text, re.IGNORECASE)
+def whataboutism_service(tweet: str) -> list | None:
+    sentences = re.split(r'(?<=[.!?]) +', tweet)
 
-    # match = match1 or match2
-
-    matches = []
-
-    for name, pattern in wat_patterns.items():
-        if re.search(pattern, text, re.IGNORECASE):
-            matches.append(name)
-    
-    if len(matches) > 0:
-        for i in range(len(matches)):
-            matches[i] = "'" + matches[i] + "'"
-
-        print("Warning: This content may be manipulative! Detected phrases: " + ",".join(matches))
-        return 1
-    else:
-        print("No manipulative content detected.")
-        return 0 
-
-# Example input text
-content = input("Enter the content: ")
+    whataboutism_sentances = []
 
 
-# >>> Example text to test few cases
-# 
-# content = """
-# Why are we criticizing the government for its handling of the healthcare system?
-# What about the issues with the education system? 
-# Shouldn't we address those problems first before focusing on healthcare?
-# What does Elon Mask have to say about global warming?
-# How can he ignore pure childrens in Africa?
-# """
+    for sentance in sentences:
+        for name, pattern in WAT_PATTERNS.items():
+            if re.search(pattern, sentance, re.IGNORECASE):
+                whataboutism_sentances.append((ID, sentance, None))
 
-# Detect manipulative phrase and return warning
-detect_manipulative_content(content)
+    return whataboutism_sentances if len(whataboutism_sentances) > 0 else None

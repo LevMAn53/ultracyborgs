@@ -3,3 +3,4 @@ vaderSentiment
 python-dotenv
 langchain_anthropic
 langchain_core
+fastapi[standard]
