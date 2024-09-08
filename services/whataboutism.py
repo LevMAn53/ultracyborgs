@@ -20,6 +20,7 @@ def whataboutism_service(tweet: str) -> list | None:
 
     whataboutism_sentances = []
 
+
     for sentance in sentences:
         for name, pattern in WAT_PATTERNS.items():
             if re.search(pattern, sentance, re.IGNORECASE):
