@@ -23,6 +23,6 @@ def whataboutism_service(tweet: str) -> list | None:
     for sentance in sentences:
         for name, pattern in WAT_PATTERNS.items():
             if re.search(pattern, sentance, re.IGNORECASE):
-                whataboutism_sentances.append(sentance)
+                whataboutism_sentances.append((ID, sentance, None))
 
     return whataboutism_sentances if len(whataboutism_sentances) > 0 else None
