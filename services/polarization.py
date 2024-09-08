@@ -2,6 +2,7 @@ import dotenv
 from langchain_anthropic import Anthropic
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
+from typings import RedFlag
 
 ID: int = 4
 
@@ -63,16 +64,16 @@ prompt = PromptTemplate(
 chain = prompt | llm | StrOutputParser()
 
 # Service
-def polarization_service(tweet: str) -> list | None:
-    invokation = chain.invoke({'tweet': tweet})
+def polarization_service(tweet: str) -> list[RedFlag] | None:
+    invokation: str = chain.invoke({'tweet': tweet})
     _, polarization, explanation = invokation.split('\n')
 
 
     if polarization[14:] == 'True':
-        return [(
-            ID,
-            tweet,
-            explanation[13:]
+        return [RedFlag(
+            RedFlagId=ID,
+            Phrase=tweet,
+            Description=explanation[13:]
         )]
 
     return None

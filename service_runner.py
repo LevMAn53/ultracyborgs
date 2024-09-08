@@ -1,5 +1,5 @@
 from concurrent.futures import ProcessPoolExecutor, wait
-from type_annotations import RedFlag
+from typings import RedFlag
 from services import (
     whataboutism_service,
     emotional_clickbait_service,
@@ -9,7 +9,7 @@ from services import (
 
 N_EXECUTORS: int = 4
 
-def run_services(tweet: str) -> list:
+def run_services(tweet: str) -> list[RedFlag]:
     services = [
         whataboutism_service,
         emotional_clickbait_service,
@@ -23,16 +23,10 @@ def run_services(tweet: str) -> list:
         ]
         wait(futures)
 
-    results = []
-    
+    results: list[RedFlag] = []
+
     for f in futures:
         if f.result() is not None:
             results.extend(f.result())
 
-    return [
-        RedFlag(
-            RedFlagId=result[0],
-            Phrase=result[1],
-            Description=result[2]
-        ) for result in results
-    ]
+    return results

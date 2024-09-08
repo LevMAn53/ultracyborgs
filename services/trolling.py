@@ -1,5 +1,6 @@
 import re
-import pandas as pd 
+import pandas as pd
+from typings import RedFlag
 
 ID: int = 3
 
@@ -7,7 +8,7 @@ ID: int = 3
 CLICKBAIT_PHRASES: list[str] = pd.read_csv("./nice-words.csv")['2g1c'].tolist()
 
 # Function to detect and flag clickbait words in a text
-def trolling_service(text: str) -> list:
+def trolling_service(text: str) -> list[RedFlag]:
     flagged_info: list[str] = []
 
     for phrase in CLICKBAIT_PHRASES:
@@ -15,4 +16,4 @@ def trolling_service(text: str) -> list:
             # Append the flagged sentence and the triggering word/phrase
             flagged_info.append(phrase)
 
-    return [(ID, word, None) for word in flagged_info]
+    return [RedFlag(RedFlagId=ID, Phrase=word) for word in flagged_info]

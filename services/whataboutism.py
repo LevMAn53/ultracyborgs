@@ -1,4 +1,5 @@
 import re
+from typings import RedFlag
 
 ID: int = 1
 
@@ -15,15 +16,14 @@ WAT_PATTERNS: dict[str, str] = {
 }
 
 # Function to detect the phrase "What about...?" and return a warning
-def whataboutism_service(tweet: str) -> list | None:
+def whataboutism_service(tweet: str) -> list[RedFlag] | None:
     sentences = re.split(r'(?<=[.!?]) +', tweet)
 
-    whataboutism_sentances = []
-
+    whataboutism_sentances: list[RedFlag] = []
 
     for sentance in sentences:
-        for name, pattern in WAT_PATTERNS.items():
+        for _, pattern in WAT_PATTERNS.items():
             if re.search(pattern, sentance, re.IGNORECASE):
-                whataboutism_sentances.append((ID, sentance, None))
+                whataboutism_sentances.append(RedFlag(RedFlagId=ID, Phrase=sentance))
 
     return whataboutism_sentances if len(whataboutism_sentances) > 0 else None

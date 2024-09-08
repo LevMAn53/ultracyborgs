@@ -16,7 +16,7 @@ COPY ./services/whataboutism.py /src/services/whataboutism.py
 COPY ./.env /src/.env
 COPY ./nice-words.csv /src/nice-words.csv
 COPY ./service_runner.py /src/service_runner.py
-COPY ./type_annotations.py /src/type_annotations.py
+COPY ./typings/type_annotations.py /src/typings/type_annotations.py
 
 # app
 COPY ./main.py /src/main.py
